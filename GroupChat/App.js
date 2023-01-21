@@ -1,19 +1,25 @@
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from 'react';
 import MyStack from './src/navigation/MyStack';
 
-export const DataContext = createContext({
-  allData: [],
-  setAllData: () => { },
-});
+const initialState = {
+  user: {},
+  groupData: {}
+}
+
+function reducer(state, action) {
+  return { ...state, ...action }
+}
+
+export const DataContext = createContext();
 
 const App = () => {
 
-  const [allData, setAllData] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <DataContext.Provider value={{ allData: allData, setAllData: setAllData }}>
+    <DataContext.Provider value={{ state, dispatch }}>
       <NavigationContainer>
         <MyStack />
       </NavigationContainer>

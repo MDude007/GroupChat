@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         color: '#09958E'
     },
     splashStyle: {
-        width: '100%',
+        width: '80%',
     }
 });
 
