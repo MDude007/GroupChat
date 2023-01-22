@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
     },
     logoutContainer: {
         backgroundColor: '#09958E',
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         paddingVertical: 5,
         borderRadius: 10
     },
     logoutText: {
         fontFamily: 'Avenir',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 14,
         color: 'white',
         letterSpacing: -0.5
     },
