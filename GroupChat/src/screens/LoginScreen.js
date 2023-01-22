@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { DataContext } from '../../App';
 import { TEMP_GROUPS, USERS } from '../constants';
 
@@ -75,42 +75,46 @@ const LoginScreen = () => {
     }
 
     return (
-        <View style={styles.mainContainer}>
-            <Text style={styles.welcomeStyle}>Welcome!</Text>
-            <View>
-                <TextInput
-                    placeholder='User ID'
-                    style={styles.inputStyle}
-                    value={id}
-                    maxLength={10}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    onChangeText={onUserIdChange} />
-                <TextInput
-                    placeholder='Password'
-                    style={styles.inputStyle}
-                    value={password}
-                    maxLength={10}
-                    secureTextEntry
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    onChangeText={onPasswordChange} />
-            </View>
-            {
-                error != "" ?
-                    <Text style={styles.errorStyle}>{error}</Text>
-                    :
-                    null
-            }
-            <TouchableOpacity style={styles.loginButtonStyle} onPress={onLoginHandler} >
-                <Text style={styles.loginTextStyle}>Login</Text>
-            </TouchableOpacity>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}>
+            <View style={styles.mainContainer}>
+                <Text style={styles.welcomeStyle}>Welcome!</Text>
+                <View>
+                    <TextInput
+                        placeholder='User ID'
+                        style={styles.inputStyle}
+                        value={id}
+                        maxLength={10}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={onUserIdChange} />
+                    <TextInput
+                        placeholder='Password'
+                        style={styles.inputStyle}
+                        value={password}
+                        maxLength={10}
+                        secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={onPasswordChange} />
+                </View>
+                {
+                    error != "" ?
+                        <Text style={styles.errorStyle}>{error}</Text>
+                        :
+                        null
+                }
+                <TouchableOpacity style={styles.loginButtonStyle} onPress={onLoginHandler} >
+                    <Text style={styles.loginTextStyle}>Login</Text>
+                </TouchableOpacity>
 
-            <View>
-                <Text style={styles.helpTextStyle}>User IDs : user0, user1, user2, ..., user9</Text>
-                <Text style={styles.helpTextStyle}>Password : password</Text>
+                <View>
+                    <Text style={styles.helpTextStyle}>User IDs : user0, user1, user2, ..., user9</Text>
+                    <Text style={styles.helpTextStyle}>Password : password</Text>
+                </View>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

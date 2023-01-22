@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { StyleSheet, View, Text, TextInput, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { DataContext } from "../../App";
 import { USERS } from "../constants";
 import uuid from 'react-native-uuid';
@@ -56,69 +56,74 @@ const AddGroupModal = ({ setAddGroupModal }) => {
     }
 
     return (
-        <View style={styles.modalStyle}>
-            <View style={styles.contentStyle}>
-                <View style={styles.closeTouchContainer}>
-                    <TouchableOpacity style={styles.closeContainer} onPress={onClosePress}>
-                        <Text style={styles.closeText}>X</Text>
-                    </TouchableOpacity>
-                </View>
-                <TextInput
-                    placeholder='Group Name'
-                    style={styles.inputStyle}
-                    value={groupName}
-                    maxLength={20}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    onChangeText={onTextInputChange}
-                />
-                <Text style={styles.selectUsersText}>Select users to add to the group</Text>
-                <FlatList
-                    data={usersState}
-                    extraData={refreshList}
-                    keyExtractor={(item, index) => USERS[index].id}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <View>
-                                {
-                                    USERS[index].id != state.user.id
-                                        ?
-                                        item
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}>
+
+            <View style={styles.modalStyle}>
+                <View style={styles.contentStyle}>
+                    <View style={styles.closeTouchContainer}>
+                        <TouchableOpacity style={styles.closeContainer} onPress={onClosePress}>
+                            <Text style={styles.closeText}>X</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TextInput
+                        placeholder='Group Name'
+                        style={styles.inputStyle}
+                        value={groupName}
+                        maxLength={20}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={onTextInputChange}
+                    />
+                    <Text style={styles.selectUsersText}>Select users to add to the group</Text>
+                    <FlatList
+                        data={usersState}
+                        extraData={refreshList}
+                        keyExtractor={(item, index) => USERS[index].id}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View>
+                                    {
+                                        USERS[index].id != state.user.id
                                             ?
-                                            <TouchableOpacity style={[styles.usernameContainer, { backgroundColor: '#09958E' }]} onPress={() => onUserPress(index)}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <View style={[styles.avatarContainer, { backgroundColor: 'white' }]}>
-                                                        <Text style={[styles.avatarText, { color: '#09958E' }]}>{`U${USERS[index].id[4]}`}</Text>
+                                            item
+                                                ?
+                                                <TouchableOpacity style={[styles.usernameContainer, { backgroundColor: '#09958E' }]} onPress={() => onUserPress(index)}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <View style={[styles.avatarContainer, { backgroundColor: 'white' }]}>
+                                                            <Text style={[styles.avatarText, { color: '#09958E' }]}>{`U${USERS[index].id[4]}`}</Text>
+                                                        </View>
+                                                        <Text style={[styles.usernameStyle, { color: 'white' }]}>{USERS[index].name}</Text>
                                                     </View>
-                                                    <Text style={[styles.usernameStyle, { color: 'white' }]}>{USERS[index].name}</Text>
-                                                </View>
-                                            </TouchableOpacity>
+                                                </TouchableOpacity>
+                                                :
+                                                <TouchableOpacity style={styles.usernameContainer} onPress={() => onUserPress(index)}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <View style={styles.avatarContainer}>
+                                                            <Text style={styles.avatarText}>{`U${USERS[index].id[4]}`}</Text>
+                                                        </View>
+                                                        <Text style={styles.usernameStyle}>{USERS[index].name}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
                                             :
-                                            <TouchableOpacity style={styles.usernameContainer} onPress={() => onUserPress(index)}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <View style={styles.avatarContainer}>
-                                                        <Text style={styles.avatarText}>{`U${USERS[index].id[4]}`}</Text>
-                                                    </View>
-                                                    <Text style={styles.usernameStyle}>{USERS[index].name}</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        :
-                                        null
-                                }
-                            </View>
+                                            null
+                                    }
+                                </View>
 
-                        )
-                    }}
-                />
+                            )
+                        }}
+                    />
 
-                {error != "" ? <Text style={styles.errorStyle}>{error}</Text> : null}
+                    {error != "" ? <Text style={styles.errorStyle}>{error}</Text> : null}
 
-                <TouchableOpacity style={styles.submitContainer} onPress={onSubmitPress}>
-                    <Text style={styles.submitText}>Submit</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.submitContainer} onPress={onSubmitPress}>
+                        <Text style={styles.submitText}>Submit</Text>
+                    </TouchableOpacity>
+                </View >
             </View >
-        </View >
+        </KeyboardAvoidingView>
     )
 
 }

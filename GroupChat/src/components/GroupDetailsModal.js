@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native";
 import GroupDetailsComponent from "./GroupDetailsComponent";
 import EditGroup from "./EditGroup";
 import { DataContext } from "../../App";
@@ -9,31 +9,35 @@ const GroupDetailsModal = ({ setGroupDetailsModal, groupIndex }) => {
     const { state, dispatch } = useContext(DataContext);
 
     return (
-        <View style={styles.modalStyle}>
-            <View style={styles.contentStyle}>
-                <View style={[styles.optionsContainer, state.groupData[groupIndex].admin == state.user.id ? { justifyContent: 'space-between' } : { justifyContent: 'flex-end' }]}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}>
+            <View style={styles.modalStyle}>
+                <View style={styles.contentStyle}>
+                    <View style={[styles.optionsContainer, state.groupData[groupIndex].admin == state.user.id ? { justifyContent: 'space-between' } : { justifyContent: 'flex-end' }]}>
+                        {
+                            state.groupData[groupIndex].admin == state.user.id
+                                ?
+                                <TouchableOpacity style={styles.editContainer} onPress={() => setEditDetails((curr) => !curr)}>
+                                    <Text style={styles.editText}>{!editDetails ? 'Edit Group' : 'Back'}</Text>
+                                </TouchableOpacity>
+                                :
+                                null
+                        }
+                        <TouchableOpacity style={styles.closeContainer} onPress={() => setGroupDetailsModal(false)} >
+                            <Text style={styles.closeText}>X</Text>
+                        </TouchableOpacity>
+                    </View>
                     {
-                        state.groupData[groupIndex].admin == state.user.id
+                        editDetails
                             ?
-                            <TouchableOpacity style={styles.editContainer} onPress={() => setEditDetails((curr) => !curr)}>
-                                <Text style={styles.editText}>{!editDetails ? 'Edit Group' : 'Back'}</Text>
-                            </TouchableOpacity>
+                            <EditGroup groupIndex={groupIndex} setGroupDetailsModal={setGroupDetailsModal} />
                             :
-                            null
+                            <GroupDetailsComponent groupIndex={groupIndex} />
                     }
-                    <TouchableOpacity style={styles.closeContainer} onPress={() => setGroupDetailsModal(false)} >
-                        <Text style={styles.closeText}>X</Text>
-                    </TouchableOpacity>
                 </View>
-                {
-                    editDetails
-                        ?
-                        <EditGroup groupIndex={groupIndex} setGroupDetailsModal={setGroupDetailsModal} />
-                        :
-                        <GroupDetailsComponent groupIndex={groupIndex} />
-                }
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 
 }
