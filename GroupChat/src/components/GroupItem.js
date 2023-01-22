@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { Image, Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import GroupDetailsModal from './GroupDetailsModal';
+import ThreeDots from './ThreeDots';
 
 const GroupItem = ({ group, groupIndex }) => {
 
@@ -17,8 +18,8 @@ const GroupItem = ({ group, groupIndex }) => {
     return (
         <TouchableOpacity style={styles.mainContainer} onPress={onItemPress}>
             <Text style={styles.titleStyle}>{group.name}</Text>
-            <TouchableOpacity onPress={() => setGroupDetailsModal(true)}>
-                <Image source={require('../assets/menu_dots_white.png')} style={styles.menuDots} />
+            <TouchableOpacity onPress={() => setGroupDetailsModal(true)} style={{}}>
+                <ThreeDots />
             </TouchableOpacity>
 
             <Modal
