@@ -16,6 +16,7 @@ User can see the details of the group by clicking on the three dots icon. If he 
 
 Android APK: https://drive.google.com/drive/folders/1JywSdmCXMsUWGSo_a4xcYhVrjRbHGD56?usp=share_link
 
+Checkout the demo video below:
 
 https://user-images.githubusercontent.com/26070063/213920796-b3543bb4-14d4-435e-9240-dcad3f211a70.mp4
 
