@@ -37,6 +37,14 @@ const EditGroup = ({ groupIndex, setGroupDetailsModal }) => {
         setRefreshList((curr) => !curr);
     }
 
+    const onDeletePress = async () => {
+        let groups = state.groupData;
+        groups = groups.filter((item, index) => index != groupIndex);
+        await AsyncStorage.setItem('groupData', JSON.stringify(groups));
+        dispatch({ groupData: groups });
+        setGroupDetailsModal(false);
+    }
+
     const onUpdatePress = async () => {
         if (groupName == "") {
             setError("Please add the group name.")
@@ -111,9 +119,16 @@ const EditGroup = ({ groupIndex, setGroupDetailsModal }) => {
 
             {error != "" ? <Text style={styles.errorStyle}>{error}</Text> : null}
 
-            <TouchableOpacity style={styles.submitContainer} onPress={onUpdatePress}>
-                <Text style={styles.submitText}>Update</Text>
-            </TouchableOpacity>
+            <View style={styles.actionContainer}>
+                <TouchableOpacity style={styles.submitContainer} onPress={onUpdatePress}>
+                    <Text style={styles.submitText}>Update Details</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.submitContainer, { backgroundColor: 'white', borderWidth: 1, borderColor: '#09958E' }]}
+                    onPress={onDeletePress}>
+                    <Text style={[styles.submitText, { color: '#09958E' }]}>Delete Group</Text>
+                </TouchableOpacity>
+            </View>
         </View >
     )
 
@@ -192,19 +207,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#09958E'
     },
+    actionContainer: {
+        alignItems: 'center',
+        marginVertical: 20,
+        gap: 10
+    },
     submitContainer: {
         backgroundColor: '#09958E',
-        marginVertical: 20,
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 50,
-        width: 150,
         justifyContent: 'center',
         alignItems: 'center'
     },
     submitText: {
         fontFamily: 'Avenir',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         color: 'white',
         letterSpacing: -0.3
