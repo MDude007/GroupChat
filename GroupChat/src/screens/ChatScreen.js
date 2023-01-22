@@ -4,13 +4,15 @@ import { GiftedChat } from "react-native-gifted-chat";
 import uuid from 'react-native-uuid';
 import { DataContext } from "../../App";
 import { Text } from 'react-native';
+import { View } from "react-native";
 
 const ChatScreen = ({ route }) => {
 
-    const { group } = route.params;
+    const { groupIndex } = route.params;
 
-    const [messages, setMessages] = useState(group.messages);
     const { state, dispatch } = useContext(DataContext);
+    const [messages, setMessages] = useState(state.groupData[groupIndex].messages);
+
 
     const setAsyncStorageData = async (changedData) => {
         await AsyncStorage.setItem('groupData', JSON.stringify(changedData));
@@ -19,11 +21,7 @@ const ChatScreen = ({ route }) => {
     useEffect(() => {
         if (messages.length) {
             let temp = state.groupData;
-            for (let i = 0; i < temp.length; i++) {
-                if (temp[i].id == group.id) {
-                    temp[i].messages = messages;
-                }
-            }
+            temp[groupIndex].messages = messages;
             setAsyncStorageData(temp);
             dispatch({ groupData: temp });
         }
@@ -39,7 +37,11 @@ const ChatScreen = ({ route }) => {
             onSend={messages => onSend(messages)}
             user={{
                 _id: state.user.id,
-                avatar: `https://ui-avatars.com/api/?background=09958E&color=FFF&name=U+${state.user.id[state.user.id.length - 1]}`
+                avatar: `https://ui-avatars.com/api/?background=09958E&color=FFF&name=U+${state.user.id[4]}`
+            }}
+            textInputProps={{
+                autoCapitalize: "none",
+                autoCorrect: false
             }}
         />
     )

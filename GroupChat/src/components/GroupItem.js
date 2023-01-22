@@ -1,21 +1,33 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Image, Modal, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import GroupDetailsModal from './GroupDetailsModal';
 
-const GroupItem = ({ group }) => {
+const GroupItem = ({ group, groupIndex }) => {
+
+    const [groupDetailsModal, setGroupDetailsModal] = useState(false);
 
     const navigation = useNavigation();
 
     const onItemPress = () => {
-        navigation.navigate('ChatScreen', { group: group });
+        navigation.navigate('ChatScreen', { groupIndex: groupIndex });
     }
 
     return (
         <TouchableOpacity style={styles.mainContainer} onPress={onItemPress}>
             <Text style={styles.titleStyle}>{group.name}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setGroupDetailsModal(true)}>
                 <Image source={require('../assets/menu_dots_white.png')} style={styles.menuDots} />
             </TouchableOpacity>
+
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={groupDetailsModal}
+                onRequestClose={() => setGroupDetailsModal(false)}>
+                <GroupDetailsModal setGroupDetailsModal={setGroupDetailsModal} groupIndex={groupIndex} />
+            </Modal>
         </TouchableOpacity>
     )
 }

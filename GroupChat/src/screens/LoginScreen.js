@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         width: 300,
-        color: '#09958E'
+        color: '#09958E',
+        borderWidth: 2
     },
     loginButtonStyle: {
         backgroundColor: '#09958E',
@@ -153,9 +154,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     loginTextStyle: {
+        fontFamily: 'Avenir',
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
+        letterSpacing: -0.3
     },
     helpTextStyle: {
         color: '#09958E',

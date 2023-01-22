@@ -1,13 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useContext, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
 import { DataContext } from '../../App';
+import AddGroupModal from '../components/AddGroupModal';
 import GroupItem from '../components/GroupItem';
 
 const HomeScreen = () => {
 
     const { state, dispatch } = useContext(DataContext);
+    const [addGroupModal, setAddGroupModal] = useState(false);
 
     const navigation = useNavigation();
 
@@ -16,12 +18,10 @@ const HomeScreen = () => {
         navigation.replace('LoginScreen')
     }
 
-    console.log(JSON.stringify(state));
-
     return (
         <View style={styles.mainContainer}>
             <View style={styles.optionContainer}>
-                <Text style={styles.greetingText}>Hi, {state.user.name}</Text>
+                <Text style={styles.greetingText}>Hello, {state.user.name}</Text>
                 <TouchableOpacity style={styles.logoutContainer} onPress={onLogout}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
@@ -29,14 +29,26 @@ const HomeScreen = () => {
             <FlatList
                 data={state.groupData}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => {
-                    return <GroupItem group={item} />
+                renderItem={({ item, index }) => {
+                    if (item.users.includes(parseInt(state.user.id[4]))) {
+                        return <GroupItem group={item} groupIndex={index} />
+                    }
+                    else return null;
                 }}
-
             />
-            <TouchableOpacity style={styles.addIconContainer}>
-                <Text style={styles.addIconText}>+</Text>
-            </TouchableOpacity>
+            <View style={{ width: '100%', alignItems: 'center' }}>
+                <TouchableOpacity style={styles.addIconContainer} onPress={() => setAddGroupModal(true)}>
+                    <Text style={styles.addIconText}>+</Text>
+                </TouchableOpacity>
+            </View>
+
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={addGroupModal}
+                onRequestClose={() => setAddGroupModal(false)}>
+                <AddGroupModal setAddGroupModal={setAddGroupModal} />
+            </Modal>
         </View>
     )
 
@@ -46,7 +58,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-        paddingBottom: 20
+        paddingBottom: 10
     },
     optionContainer: {
         width: '100%',
@@ -76,10 +88,7 @@ const styles = StyleSheet.create({
         letterSpacing: -0.5
     },
     addIconContainer: {
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        margin: 30,
+        margin: 20,
         borderRadius: 50,
         minWidth: 70,
         minHeight: 70,

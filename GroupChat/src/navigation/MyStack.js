@@ -5,10 +5,15 @@ import { Image, Modal, StyleSheet, View } from 'react-native';
 import HomeScreen from "../screens/HomeScreen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ChatScreen from "../screens/ChatScreen";
+import { useContext } from "react";
+import { DataContext } from "../../App";
 
 const Stack = createStackNavigator();
 
 const MyStack = () => {
+
+    const { state } = useContext(DataContext);
+
     return (
         <Stack.Navigator
             initialRouteName="SplashScreen">
@@ -19,7 +24,7 @@ const MyStack = () => {
                 headerShown: false,
             }} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{
-                title: "Home Screen",
+                title: "GroupChat",
                 headerTitleStyle: {
                     color: '#09958E',
                     fontFamily: 'Didot',
@@ -30,8 +35,8 @@ const MyStack = () => {
                     backgroundColor: 'white'
                 }
             }} />
-            <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
-                title: "Home Screen",
+            <Stack.Screen name="ChatScreen" component={ChatScreen} options={({ route }) => ({
+                title: state.groupData[route.params.groupIndex].name,
                 headerTitleStyle: {
                     color: '#09958E',
                     fontFamily: 'Didot',
@@ -40,8 +45,10 @@ const MyStack = () => {
                 },
                 headerStyle: {
                     backgroundColor: 'white'
-                }
-            }} />
+                },
+                headerBackTitle: '',
+                headerTintColor: '#09958E'
+            })} />
         </Stack.Navigator >
     )
 }
