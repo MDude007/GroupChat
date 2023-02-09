@@ -1,14 +1,14 @@
 export const USERS = [
-    { id: "user0", password: "password", name: "User0" },
-    { id: "user1", password: "password", name: "User1" },
-    { id: "user2", password: "password", name: "User2" },
-    { id: "user3", password: "password", name: "User3" },
-    { id: "user4", password: "password", name: "User4" },
-    { id: "user5", password: "password", name: "User5" },
-    { id: "user6", password: "password", name: "User6" },
-    { id: "user7", password: "password", name: "User7" },
-    { id: "user8", password: "password", name: "User8" },
-    { id: "user9", password: "password", name: "User9" }
+    { id: "user0", password: "password", name: "User0", avatar: 'https://robohash.org/user0' },
+    { id: "user1", password: "password", name: "User1", avatar: 'https://robohash.org/user1' },
+    { id: "user2", password: "password", name: "User2", avatar: 'https://robohash.org/user2' },
+    { id: "user3", password: "password", name: "User3", avatar: 'https://robohash.org/user3' },
+    { id: "user4", password: "password", name: "User4", avatar: 'https://robohash.org/user4' },
+    { id: "user5", password: "password", name: "User5", avatar: 'https://robohash.org/user5' },
+    { id: "user6", password: "password", name: "User6", avatar: 'https://robohash.org/user6' },
+    { id: "user7", password: "password", name: "User7", avatar: 'https://robohash.org/user7' },
+    { id: "user8", password: "password", name: "User8", avatar: 'https://robohash.org/user8' },
+    { id: "user9", password: "password", name: "User9", avatar: 'https://robohash.org/user9' }
 ]
 
 export const TEMP_GROUPS = [
