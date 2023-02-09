@@ -20,4 +20,4 @@ Checkout the demo video below:
 
 https://user-images.githubusercontent.com/26070063/213920796-b3543bb4-14d4-435e-9240-dcad3f211a70.mp4
 
-<img src="https://user-images.githubusercontent.com/26070063/217703104-30c30452-7568-452b-aaaf-676ff1952aa1.png" width="100" height="200">
+<img src="https://user-images.githubusercontent.com/26070063/217703104-30c30452-7568-452b-aaaf-676ff1952aa1.png" width="300" height="600">
